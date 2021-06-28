@@ -1,104 +1,168 @@
+import 'package:blocapp/route/route.dart';
+import 'package:blocapp/route/route_name.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.white, // navigation bar color
+    statusBarColor: Colors.white, // status bar color
+    statusBarBrightness: Brightness.dark, //status bar brigtness
+    statusBarIconBrightness: Brightness.dark, //status barIcon Brightness
+    systemNavigationBarDividerColor:
+        Colors.white, //Navigation bar divider color
+    systemNavigationBarIconBrightness: Brightness.dark, //navigation bar icon
+  ));
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'AirPhotos',
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: Routes.onGenerateRoute,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+        primarySwatch: Colors.blueGrey,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primaryColor: Colors.white,
+        primaryColorBrightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
+        accentColor: Color(0xff36608F),
+        accentColorBrightness: Brightness.dark,
+        bottomAppBarColor: Colors.white,
+        buttonColor: Color(0xffE3E1E2),
+        errorColor: Colors.red,
+        buttonTheme: ButtonThemeData(
+          height: 50,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          buttonColor: Color(0xffE3E1E2),
+          textTheme: ButtonTextTheme.primary,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          focusColor: Color(0xff36608F),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xff36608F),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+          ),
+          errorStyle: TextStyle(color: Colors.red),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xffD4D4D4),
             ),
-          ],
+          ),
+          hintStyle: TextStyle(
+            fontSize: 14, // 35
+            fontFamily: 'PoppinsRegular',
+            color: Colors.grey,
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.light,
+          elevation: 10,
+          actionsIconTheme: IconThemeData(
+            color: Color(0xff36608F),
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color: Color(0xff36608F),
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          elevation: 10,
+          backgroundColor: Colors.white,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: Color(0xff36608F),
+          unselectedItemColor: Colors.grey,
+        ),
+        tabBarTheme: TabBarTheme(
+          labelColor: Color(0xff36608F),
+          unselectedLabelColor: Color(0xff818181),
+          labelStyle: TextStyle(
+            fontSize: 22,
+            fontFamily: 'PoppinsBold',
+          ),
+          unselectedLabelStyle: TextStyle(
+            fontSize: 22,
+            fontFamily: 'PoppinsBold',
+          ),
+        ),
+        textTheme: TextTheme(
+          headline1: TextStyle(
+            fontSize: 30, // 75
+            fontFamily: 'PoppinsSemibold',
+            color: Colors.black,
+          ),
+          headline2: TextStyle(
+            fontSize: 22, // 50
+            color: Color(0xff36608F),
+            fontFamily: 'PoppinsSemibold',
+          ),
+          headline3: TextStyle(
+            fontSize: 22, // 50
+            color: Color(0xff36608F),
+            fontFamily: 'PoppinsBold',
+          ),
+          headline4: TextStyle(
+            fontSize: 22, // 50
+            fontFamily: 'PoppinsMedium',
+          ),
+          headline5: TextStyle(
+            fontSize: 20, // 45
+            fontFamily: 'PoppinsMedium',
+          ),
+          headline6: TextStyle(
+              fontSize: 18, // 40
+              fontFamily: 'PoppinsMedium',
+              color: Colors.black),
+          bodyText1: TextStyle(
+            fontSize: 14, // 35
+            fontFamily: 'PoppinsRegular',
+            color: Colors.grey,
+          ),
+          bodyText2: TextStyle(
+            fontSize: 14, // 35
+            fontFamily: 'PoppinsMedium',
+            color: Colors.grey,
+          ),
+          subtitle1: TextStyle(
+            fontSize: 16,
+            fontFamily: 'PoppinsRegular',
+            letterSpacing: 0.15,
+          ),
+          subtitle2: TextStyle(
+            fontSize: 14,
+            fontFamily: 'PoppinsMedium',
+            letterSpacing: 0.1,
+          ),
+          overline: TextStyle(
+              fontSize: 13,
+              fontFamily: 'PoppinsMedium',
+              letterSpacing: 0.1,
+              color: Colors.grey),
+          button: TextStyle(
+            fontSize: 22, // 50
+            fontFamily: 'PoppinsSemibold',
+            color: Colors.white,
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      initialRoute: HomeRoute,
     );
   }
 }
