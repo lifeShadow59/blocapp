@@ -1,4 +1,4 @@
-import 'package:blocapp/bloc/profile_bloc.dart';
+import 'package:blocapp/business_logic/cubit/profile_cubit.dart';
 import 'package:blocapp/route/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,15 +30,15 @@ class DemoTwo extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-                BlocBuilder<UpDateProfileBloc, Map<String, String>>(
+                BlocBuilder<ProfileCubit, ProfileState>(
                     buildWhen: (previous, current) {
-                  if (previous["Name"] != current["Name"])
+                  if (previous.userName != current.userName)
                     return true;
                   else
                     return false;
                 }, builder: (context, event) {
                   return Text(
-                    "${event["Name"]}",
+                    "${event.userName}",
                     style: Theme.of(context).textTheme.headline3,
                   );
                 })
@@ -54,15 +54,15 @@ class DemoTwo extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-                BlocBuilder<UpDateProfileBloc, Map<String, String>>(
+                BlocBuilder<ProfileCubit, ProfileState>(
                     buildWhen: (previous, current) {
-                  if (previous["Email"] != current["Email"])
+                  if (previous.userEmailId != current.userEmailId)
                     return true;
                   else
                     return false;
                 }, builder: (context, event) {
                   return Text(
-                    "${event["Email"]}",
+                    "${event.userEmailId}",
                     style: Theme.of(context).textTheme.headline3,
                   );
                 })

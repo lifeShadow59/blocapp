@@ -1,4 +1,4 @@
-import 'package:blocapp/bloc/profile_bloc.dart';
+import 'package:blocapp/business_logic/cubit/profile_cubit.dart';
 import 'package:blocapp/route/route_name.dart';
 import 'package:blocapp/widget/colors.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class _ProfileState extends State<Profile> {
   String get name => _nameController.text;
   String get email => _emailController.text;
 
-  final UpDateProfileBloc _upDateProfileBloc = UpDateProfileBloc();
+  final ProfileCubit _profileCubit = ProfileCubit();
 
   @override
   void initState() {
@@ -32,14 +32,13 @@ class _ProfileState extends State<Profile> {
 
     _emailFocusNode.dispose();
     _nameFocusNode.dispose();
-    _upDateProfileBloc.close();
+    _profileCubit.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     TextStyle? fontStyles = Theme.of(context).textTheme.headline1;
-    final _UserData = BlocProvider.of<UpDateProfileBloc>(context);
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -64,16 +63,18 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       width: 10,
                     ),
-                    BlocBuilder<UpDateProfileBloc, Map<String, String>>(
+                    BlocBuilder<ProfileCubit, ProfileState>(
                         buildWhen: (previous, current) {
-                      if (previous["Name"] != current["Name"])
+                      if (previous.userName != current.userName)
                         return true;
                       else
                         return false;
                     }, builder: (context, event) {
                       return Text(
-                        "${event["Name"]}",
+                        "${event.userName}",
                         style: Theme.of(context).textTheme.headline3,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       );
                     })
                   ],
@@ -88,15 +89,15 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       width: 10,
                     ),
-                    BlocBuilder<UpDateProfileBloc, Map<String, String>>(
+                    BlocBuilder<ProfileCubit, ProfileState>(
                         buildWhen: (previous, current) {
-                      if (previous["Email"] != current["Email"])
+                      if (previous.userEmailId != current.userEmailId)
                         return true;
                       else
                         return false;
                     }, builder: (context, event) {
                       return Text(
-                        "${event["Email"]}",
+                        "${event.userEmailId}",
                         style: Theme.of(context).textTheme.headline3,
                       );
                     })
@@ -138,10 +139,9 @@ class _ProfileState extends State<Profile> {
                     )),
                   ),
                   onPressed: () {
-                    // _upDateProfileBloc.add(
-                    //   UpdateProfileEvent.update,
-                    // );
-                    _UserData.add(UpdateProfileEvent.update);
+                    context
+                        .read<ProfileCubit>()
+                        .onSave(_nameController.text, _emailController.text);
                   },
                   child: Text("Update Profile",
                       style: TextStyle(color: PrimaryBlueColor)),

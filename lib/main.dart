@@ -1,4 +1,4 @@
-import 'package:blocapp/bloc/profile_bloc.dart';
+import 'package:blocapp/business_logic/cubit/profile_cubit.dart';
 import 'package:blocapp/route/route.dart';
 import 'package:blocapp/route/route_name.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => UpDateProfileBloc(),
+      create: (_) => ProfileCubit(),
       child: MaterialApp(
         title: 'AirPhotos',
         debugShowCheckedModeBanner: false,
