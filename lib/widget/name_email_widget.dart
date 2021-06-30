@@ -33,6 +33,9 @@ class NameAndEmailWidget extends StatelessWidget {
             })
           ],
         ),
+        Divider(
+          color: Theme.of(context).accentColor,
+        ),
         SizedBox(
           height: 20,
         ),
@@ -60,6 +63,9 @@ class NameAndEmailWidget extends StatelessWidget {
               );
             })
           ],
+        ),
+        Divider(
+          color: Theme.of(context).accentColor,
         ),
       ],
     );
