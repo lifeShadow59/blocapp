@@ -1,5 +1,7 @@
-import 'package:blocapp/business_logic/cubit/profile_cubit.dart';
+import 'package:blocapp/business_logic/cubit/darktheme_cubit.dart';
 import 'package:blocapp/route/route_name.dart';
+import 'package:blocapp/widget/name_email_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,58 +18,33 @@ class Home extends StatelessWidget {
           style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 35),
         ),
         elevation: 0,
-        centerTitle: true,
+        
+        actions: [
+
+          BlocBuilder<DarkThemeCubit, DarkThemeState>(
+            buildWhen: (previous, current) {
+              if (previous.darkTheme != current.darkTheme)
+                return true;
+              else
+                return false;
+            },
+            builder: (context, state) {
+              return CupertinoSwitch(
+                value: state.darkTheme,
+                onChanged: (value) {
+                  context.read<DarkThemeCubit>().changeTheme(value);
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(25),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(Icons.accessibility_new),
-                SizedBox(
-                  width: 10,
-                ),
-                BlocBuilder<ProfileCubit, ProfileState>(
-                    buildWhen: (previous, current) {
-                  if (previous.userName != current.userName)
-                    return true;
-                  else
-                    return false;
-                }, builder: (context, event) {
-                  return Text(
-                    "${event.userName}",
-                    style: Theme.of(context).textTheme.headline3,
-                  );
-                })
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(Icons.email_outlined),
-                SizedBox(
-                  width: 10,
-                ),
-                BlocBuilder<ProfileCubit, ProfileState>(
-                    buildWhen: (previous, current) {
-                  if (previous.userEmailId != current.userEmailId)
-                    return true;
-                  else
-                    return false;
-                }, builder: (context, event) {
-                  return Text(
-                    "${event.userEmailId}",
-                    style: Theme.of(context).textTheme.headline3,
-                  );
-                })
-              ],
-            ),
+            NameAndEmailWidget(),
             SizedBox(
               height: 100,
             ),

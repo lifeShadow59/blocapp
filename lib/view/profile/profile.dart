@@ -1,6 +1,7 @@
 import 'package:blocapp/business_logic/cubit/profile_cubit.dart';
 import 'package:blocapp/route/route_name.dart';
-import 'package:blocapp/widget/colors.dart';
+import 'package:blocapp/widget/elevation_custom_button.dart';
+import 'package:blocapp/widget/name_email_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,8 +19,6 @@ class _ProfileState extends State<Profile> {
   String get name => _nameController.text;
   String get email => _emailController.text;
 
-  final ProfileCubit _profileCubit = ProfileCubit();
-
   @override
   void initState() {
     super.initState();
@@ -32,7 +31,6 @@ class _ProfileState extends State<Profile> {
 
     _emailFocusNode.dispose();
     _nameFocusNode.dispose();
-    _profileCubit.close();
     super.dispose();
   }
 
@@ -56,53 +54,7 @@ class _ProfileState extends State<Profile> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(Icons.accessibility_new),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    BlocBuilder<ProfileCubit, ProfileState>(
-                        buildWhen: (previous, current) {
-                      if (previous.userName != current.userName)
-                        return true;
-                      else
-                        return false;
-                    }, builder: (context, event) {
-                      return Text(
-                        "${event.userName}",
-                        style: Theme.of(context).textTheme.headline3,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      );
-                    })
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(Icons.email_outlined),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    BlocBuilder<ProfileCubit, ProfileState>(
-                        buildWhen: (previous, current) {
-                      if (previous.userEmailId != current.userEmailId)
-                        return true;
-                      else
-                        return false;
-                    }, builder: (context, event) {
-                      return Text(
-                        "${event.userEmailId}",
-                        style: Theme.of(context).textTheme.headline3,
-                      );
-                    })
-                  ],
-                ),
+                NameAndEmailWidget(),
                 SizedBox(
                   height: 40,
                 ),
@@ -124,27 +76,23 @@ class _ProfileState extends State<Profile> {
                 SizedBox(
                   height: 50,
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(SecondaryGrayColor),
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                        EdgeInsets.all(12.5)),
-                    elevation: MaterialStateProperty.all<double>(10),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8.0),
-                      ),
-                    )),
-                  ),
-                  onPressed: () {
-                    context
-                        .read<ProfileCubit>()
-                        .onSave(_nameController.text, _emailController.text);
-                  },
-                  child: Text("Update Profile",
-                      style: TextStyle(color: PrimaryBlueColor)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomButton(
+                      title: 'Clean',
+                      onTap: () {
+                        context.read<ProfileCubit>().onClean();
+                      },
+                    ),
+                    CustomButton(
+                      title: 'Update Profile',
+                      onTap: () {
+                        context.read<ProfileCubit>().onSave(
+                            _nameController.text, _emailController.text);
+                      },
+                    )
+                  ],
                 ),
                 SizedBox(
                   height: 50,

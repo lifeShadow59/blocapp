@@ -4,8 +4,7 @@ class ProfileState extends Equatable {
   final String userName;
   final String userEmailId;
 
-  ProfileState({required this.userName, required this.userEmailId}) : super();
-
+  ProfileState({required this.userName, required this.userEmailId});
   ProfileState copyWith({
     required String userName,
     required String userEmailId,
