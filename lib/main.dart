@@ -4,10 +4,15 @@ import 'package:blocapp/route/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'business_logic/cubit/darktheme_cubit.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getTemporaryDirectory(),
+  );
   runApp(MyApp());
 }
 
@@ -16,10 +21,19 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    // Mobile theme
+    // WidgetsBinding.instance!.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    // mobile theme
+    // WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -41,7 +55,15 @@ class _MyAppState extends State<MyApp> {
             return false;
         },
         builder: (context, state) {
-          WidgetsFlutterBinding.ensureInitialized();
+          // this cod will be aarenge theme according to mobile theme
+          //But thay have some issue it will not change according to mobile theme
+          //
+          //
+          // context.read<DarkThemeCubit>().changeTheme(
+          // WidgetsBinding.instance!.window.platformBrightness ==
+          //         Brightness.light
+          //     ? false
+          //     : true);
           SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
             systemNavigationBarColor: state.darkTheme
                 ? Colors.black
