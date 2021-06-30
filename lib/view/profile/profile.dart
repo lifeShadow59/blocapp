@@ -88,6 +88,8 @@ class _ProfileState extends State<Profile> {
                     CustomButton(
                       title: 'Update Profile',
                       onTap: () {
+                        _emailFocusNode.unfocus();
+                        _nameFocusNode.unfocus();
                         context.read<ProfileCubit>().onSave(
                             _nameController.text, _emailController.text);
                       },
@@ -99,6 +101,8 @@ class _ProfileState extends State<Profile> {
                 ),
                 InkWell(
                   onTap: () {
+                    _emailFocusNode.unfocus();
+                    _nameFocusNode.unfocus();
                     Navigator.of(context).pushNamed(HomeRoute);
                   },
                   child: Text(
@@ -111,6 +115,8 @@ class _ProfileState extends State<Profile> {
                 ),
                 InkWell(
                   onTap: () {
+                    _emailFocusNode.unfocus();
+                    _nameFocusNode.unfocus();
                     Navigator.of(context).pushNamed(DemoPageOneRoute);
                   },
                   child: Text(
@@ -123,6 +129,8 @@ class _ProfileState extends State<Profile> {
                 ),
                 InkWell(
                   onTap: () {
+                    _emailFocusNode.unfocus();
+                    _nameFocusNode.unfocus();
                     Navigator.of(context).pushNamed(DemoPageTwoRoute);
                   },
                   child: Text(
